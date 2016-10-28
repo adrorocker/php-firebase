@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
+
+sudo: required
+
+install: composer install
+
+before_script:
+  # navigate out of module directory to prevent blown stack by recursive module lookup
+  - wget https://phar.phpunit.de/phpunit.phar
+  - chmod +x phpunit.phar
+  - sudo mv phpunit.phar /usr/local/bin/phpunit
+  - phpunit --version
+
+  - wget http://getcomposer.org/composer.phar
+  - php composer.phar install
+
+script: phpunit --bootstrap tests/bootstrap.php tests
