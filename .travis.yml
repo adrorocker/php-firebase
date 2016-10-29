@@ -19,6 +19,7 @@ before_script:
 
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install
+  - php composer.phar require satooshi/php-coveralls
 
 script:
   - mkdir -p build/logs
