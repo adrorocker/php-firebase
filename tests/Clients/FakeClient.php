@@ -43,7 +43,7 @@ class FakeClient implements ClientInterface
         $this->guzzle = new Client(['handler' => $this->handler]);
     }
 
-    public function get($endpoint)
+    public function get($endpoint, $query = [])
     {
         $request = new Request('GET',$this->buildUri($endpoint), $this->buildHeaders());
 
@@ -52,27 +52,27 @@ class FakeClient implements ClientInterface
         return $this->handle($response);
     }
 
-    public function post($endpoint, $data)
+    public function post($endpoint, $data, $query = [])
     {
 
     }
 
-    public function put($endpoint, $data)
+    public function put($endpoint, $data, $query = [])
     {
 
     }
 
-    public function patch($endpoint, $data)
+    public function patch($endpoint, $data, $query = [])
     {
 
     }
 
-    public function delete($endpoint)
+    public function delete($endpoint, $query = [])
     {
 
     }
 
-    protected function buildUri($endpoint, $options = [])
+    protected function buildUri($endpoint, $options = [], $query = [])
     {
         return 'http://example.com/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
     }
