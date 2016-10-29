@@ -17,14 +17,44 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use function GuzzleHttp\Psr7\stream_for;
 
+/**
+ * Guzzle Client.
+ *
+ * @package PhpFirebase
+ * @subpackage Clients
+ * @since 0.1.0
+ */
 class GuzzleClient implements ClientInterface
 {
+    /**
+     * Guzzle client
+     *
+     * @var \GuzzleHttp\Client
+     */
     protected $guzzle;
 
+    /**
+     * Base endpoint
+     *
+     * @var string
+     */
     protected $base;
 
+    /**
+     * Token
+     *
+     * @var string
+     */
     protected $token;
 
+    /**
+     * Set the base path for Firebase endpont
+     * the token to authenticate and the guzzle client
+     *
+     * @param string $base The base endpoint
+     * @param string $token The token
+     * @param \PhpFirebase\Interfaces\ClientInterface|null $client Client to make the request
+     */
     public function __construct(array $options = [])
     {
         if (!isset($options['base'])) {
@@ -41,6 +71,14 @@ class GuzzleClient implements ClientInterface
         $this->guzzle = new HttpClient($options);
     }
 
+    /**
+     * Create a new GET reuest
+     *
+     * @param string $endpoint The sub endpoint
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
     public function get($endpoint, $query = [])
     {
         $request = new Request('GET',$this->buildUri($endpoint, $query), $this->buildHeaders());
@@ -50,6 +88,15 @@ class GuzzleClient implements ClientInterface
         return $this->handle($response);
     }
 
+    /**
+     * Create a new POST reuest
+     *
+     * @param string $endpoint The sub endpoint
+     * @param string|array $data The data to be submited
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
     public function post($endpoint, $data, $query = [])
     {
         $data = $this->prepareData($data);
@@ -61,6 +108,15 @@ class GuzzleClient implements ClientInterface
         return $this->handle($response);
     }
 
+    /**
+     * Create a new PUT reuest
+     *
+     * @param string $endpoint The sub endpoint
+     * @param string|array $data The data to be submited
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
     public function put($endpoint, $data, $query = [])
     {
         $data = $this->prepareData($data);
@@ -72,6 +128,15 @@ class GuzzleClient implements ClientInterface
         return $this->handle($response);
     }
 
+    /**
+     * Create a new PATCH reuest
+     *
+     * @param string $endpoint The sub endpoint
+     * @param string|array $data The data to be submited
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
     public function patch($endpoint, $data, $query = [])
     {
         $data = $this->prepareData($data);
@@ -83,6 +148,14 @@ class GuzzleClient implements ClientInterface
         return $this->handle($response);
     }
 
+    /**
+     * Create a new DELETE reuest
+     *
+     * @param string $endpoint The sub endpoint
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
     public function delete($endpoint, $query = [])
     {
         $request = new Request('DELETE',$this->buildUri($endpoint, $query), $this->buildHeaders());
@@ -92,11 +165,27 @@ class GuzzleClient implements ClientInterface
         return $this->handle($response);
     }
 
+    /**
+     * Convert array|string to json
+     *
+     * @param array $data Data to be converted
+     *
+     * @return array
+     */
     protected function prepareData($data = [])
     {
         return json_encode($data);
     }
 
+    /**
+     * Create a standard uri based on the end point 
+     * and add the auth token
+     *
+     * @param string $endpoint The sub endpoint
+     * @param array $options Extra options to be added
+     *
+     * @return string
+     */
     protected function buildUri($endpoint, $options = [])
     {
         if ($this->token !== '') {
@@ -106,6 +195,13 @@ class GuzzleClient implements ClientInterface
         return $this->base . '/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
     }
 
+    /**
+     * Build all headers
+     *
+     * @param array $extraHeaders Extra headers to be added
+     *
+     * @return array
+     */
     protected function buildHeaders($extraHeaders = [])
     {
         $headers = [
@@ -116,7 +212,14 @@ class GuzzleClient implements ClientInterface
         return array_merge($headers, $extraHeaders);
     }
 
-    private function handle(Response $response, $default = null)
+    /**
+     * Handle the response
+     *
+     * @param \GuzzleHttp\Psr7\Response $response The response
+     *
+     * @return array
+     */
+    private function handle(Response $response)
     {
         $stream = stream_for($response->getBody());
 

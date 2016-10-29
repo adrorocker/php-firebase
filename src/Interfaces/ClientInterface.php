@@ -8,15 +8,65 @@
  */
 namespace PhpFirebase\Interfaces;
 
+/**
+ * Client Interface.
+ *
+ * @package PhpFirebase
+ * @subpackage Interfaces
+ * @since 0.1.0
+ */
 interface ClientInterface
 {
-    public function get($endpoint);
+    /**
+     * GET request
+     *
+     * @param string $endpoint The sub endpoint
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
+    public function get($endpoint, $query = []);
 
-    public function post($endpoint, $data);
+    /**
+     * POST request
+     *
+     * @param string $endpoint The sub endpoint
+     * @param string|array $data The data to be submited
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
+    public function post($endpoint, $data, $query = []);
 
-    public function put($endpoint, $data);
+    /**
+     * PUT request
+     *
+     * @param string $endpoint The sub endpoint
+     * @param string|array $data The data to be submited
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
+    public function put($endpoint, $data, $query = []);
 
-    public function patch($endpoint, $data);
+    /**
+     * PATCH request
+     *
+     * @param string $endpoint The sub endpoint
+     * @param string|array $data The data to be submited
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
+    public function patch($endpoint, $data, $query = []);
 
-    public function delete($endpoint);
+    /**
+     * DELETE request
+     *
+     * @param string $endpoint The sub endpoint
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
+    public function delete($endpoint, $query = []);
 }
