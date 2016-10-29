@@ -16,7 +16,7 @@ composer require adrorocker/php-firebase
 
 ## Usage
 
-```
+```php
 require '../vendor/autoload.php';
 
 use PhpFirebase\Firebase;
