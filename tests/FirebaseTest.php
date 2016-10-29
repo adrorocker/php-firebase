@@ -41,6 +41,18 @@ class FirebaseTest extends TestCase
         $response = $me->getResponse();
 
         $this->assertNull($response);
+
+        $response = $me->post('/',['key'=>'value'])->getResponse();
+
+        $this->assertNull($response);
+
+        $response = $me->put('/',['key'=>'value'])->getResponse();
+
+        $this->assertNull($response);
+
+        $response = $me->patch('/',['key'=>'value'])->getResponse();
+
+        $this->assertNull($response);
     }
 
     public function testBaseException()
