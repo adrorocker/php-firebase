@@ -23,7 +23,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml --bootstrap tests/bootstrap.php tests
+  - phpunit -c phpunit.xml.dist
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - travis_retry php vendor/bin/coveralls -v
