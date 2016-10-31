@@ -4,6 +4,7 @@
 # Exclude unused files
 # see: https://redd.it/2jzp6k
 /example            export-ignore
+/docs               export-ignore
 /tests              export-ignore
 /.codeclimate.yml   export-ignore
 /.coveralls.yml     export-ignore
