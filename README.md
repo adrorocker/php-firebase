@@ -48,3 +48,5 @@ $get = $firebase->get('/logs')->getResponse();
 
   [Master]: https://travis-ci.org/adrorocker/php-firebase/
   [Master image]: https://travis-ci.org/adrorocker/php-firebase.svg?branch=master
+  [Master covarage]: https://coveralls.io/github/adrorocker/php-firebase
+  [Master covarage image]: https://coveralls.io/repos/github/adrorocker/php-firebase/badge.svg?branch=master
