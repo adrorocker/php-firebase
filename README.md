@@ -13,7 +13,6 @@ A PHP SDK for Firebase REST API.
 ```
 composer require adrorocker/php-firebase
 ```
------------------------------------
 
 ## Usage
 
@@ -33,15 +32,16 @@ $firebase = new Firebase($base,$token);
 // Unique ID
 $id = (new \DateTime())->getTimestamp();
 
-$data = ['key' => 'value']; // Or even just a string
+// Set the data (body of the request).
+$data = ['key' => 'value']; // The data could be even just a string
 
-// Make a PUT request and retive the response
-$put = $firebase->put('/logs/'.$id, $data)->getResponse();
+// Make a PUT request, the response is return
+$put = $firebase->put('/logs/'.$id, $data);
 
-// Make a GET request and retive the response, you will see all the logs
-$get = $firebase->get('/logs')->getResponse();
+// Make a GET request, the response is return, 
+// you will have all the logs in the $get variable 
+$get = $firebase->get('/logs');
 ```
------------------------------------
 
 ## Authors:
 
