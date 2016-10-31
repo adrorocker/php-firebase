@@ -45,46 +45,42 @@ class FakeClient implements ClientInterface
 
     public function get($endpoint, $query = [])
     {
-        $request = new Request('GET',$this->buildUri($endpoint), $this->buildHeaders());
-
-        $response = $this->guzzle->send($request);
+        $response = $this->guzzle->request('GET',$endpoint);
 
         return $this->handle($response);
     }
 
     public function post($endpoint, $data, $query = [])
     {
+        $response = $this->guzzle->request('POST',$endpoint);
 
+        return $this->handle($response);
     }
 
     public function put($endpoint, $data, $query = [])
     {
+        $response = $this->guzzle->request('PUT',$endpoint);
 
+        return $this->handle($response);
     }
 
     public function patch($endpoint, $data, $query = [])
     {
+        $response = $this->guzzle->request('PATCH',$endpoint);
 
+        return $this->handle($response);
     }
 
     public function delete($endpoint, $query = [])
     {
+        $response = $this->guzzle->request('DELETE',$endpoint);
 
+        return $this->handle($response);
     }
 
     protected function buildUri($endpoint, $options = [], $query = [])
     {
         return 'http://example.com/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
-    }
-
-    protected function buildHeaders($extraHeaders = [])
-    {
-        $headers = [
-            'Accept' => 'application/json',
-            'Content-Type: application/json',
-        ];
-
-        return array_merge($headers, $extraHeaders);
     }
 
     private function handle(Response $response, $default = null)
