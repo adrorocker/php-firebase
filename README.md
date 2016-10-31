@@ -4,6 +4,7 @@
 A PHP SDK for Firebase REST API.
 
 [![Build status][Master image]][Master]
+[![Coverage Status][Master covarage image]][Master covarage]
 
 -----------------------------------
 
@@ -47,4 +48,6 @@ $get = $firebase->get('/logs')->getResponse();
 [Alejandro Morelos](https://github.com/adrorocker). 
 
   [Master]: https://travis-ci.org/adrorocker/php-firebase/
-  [Master image]: https://travis-ci.org/adrorocker/php-firebase.svg?branch=master
+  [Master image]: https://travis-ci.org/adrorocker/php-firebase.svg?branch=master&style=flat-square
+  [Master covarage]: https://coveralls.io/github/adrorocker/php-firebase?branch=master
+  [Master covarage image]: https://coveralls.io/repos/github/adrorocker/php-firebase/badge.svg?branch=master&style=flat-square

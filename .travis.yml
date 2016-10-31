@@ -19,5 +19,11 @@ before_script:
 
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install
+  - php composer.phar require satooshi/php-coveralls
 
-script: phpunit --bootstrap tests/bootstrap.php tests
+script:
+  - mkdir -p build/logs
+  - phpunit -c phpunit.xml.dist
+
+after_script:
+  - travis_retry php vendor/bin/coveralls -v
