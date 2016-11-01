@@ -11,6 +11,8 @@ namespace PhpFirebase;
 use PHPUnit\Framework\TestCase;
 use PhpFirebase\Firebase;
 use PhpFirebase\Clients\FakeClient;
+use PhpFirebase\Clients\FakeGuzzle;
+use PhpFirebase\Clients\GuzzleClient;
 
 class FirebaseTest extends TestCase
 {
@@ -34,25 +36,29 @@ class FirebaseTest extends TestCase
 
         $this->assertSame($client, $fb->getClient());
 
-        $me = $fb->get('/');
-
-        $this->assertSame($me,$fb);
-
-        $response = $me->getResponse();
+        $response = $fb->get('/');
 
         $this->assertNull($response);
 
-        $response = $me->post('/',['key'=>'value'])->getResponse();
+        $response = $fb->post('/',['key'=>'value']);
 
         $this->assertNull($response);
 
-        $response = $me->put('/',['key'=>'value'])->getResponse();
+        $response = $fb->put('/',['key'=>'value']);
 
         $this->assertNull($response);
 
-        $response = $me->patch('/',['key'=>'value'])->getResponse();
+        $response = $fb->patch('/',['key'=>'value']);
 
         $this->assertNull($response);
+
+        $response = $fb->delete('/');
+
+        $this->assertNull($response);
+
+        $same = $fb->getResponse();
+
+        $this->assertEquals($response,$same);
     }
 
     public function testBaseException()
@@ -77,5 +83,40 @@ class FirebaseTest extends TestCase
         $this->expectExceptionMessage('Token parameter needs to be string');
 
         $fb = new Firebase('https://example.com/',[]);
+    }
+
+    public function testGuzzleClient()
+    {
+        $base = 'https://example.com/';
+        $token = 's0m3t0k3n';
+        $guzzle = new FakeGuzzle;
+
+        $client = new GuzzleClient([],$guzzle);
+
+        $fb = new Firebase($base,$token,$client);
+
+        $response = $fb->get('/');
+
+        $this->assertNull($response);
+
+        $response = $fb->post('/',['key'=>'value']);
+
+        $this->assertNull($response);
+
+        $response = $fb->put('/',['key'=>'value']);
+
+        $this->assertNull($response);
+
+        $response = $fb->patch('/',['key'=>'value']);
+
+        $this->assertNull($response);
+
+        $response = $fb->delete('/');
+
+        $this->assertNull($response);
+
+        $same = $fb->getResponse();
+
+        $this->assertEquals($response,$same);
     }
 }

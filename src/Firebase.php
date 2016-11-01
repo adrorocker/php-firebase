@@ -95,9 +95,12 @@ class Firebase implements FirebaseInterface
      */
     public function get($endpoint, $query = [])
     {
-        $this->response = $this->client->get($endpoint,$query);
+        $endpoint = $this->buildUri($endpoint, $query);
+        $headers = $this->buildHeaders();
 
-        return $this;
+        $this->response = $this->client->get($endpoint,$headers);
+
+        return $this->response;
     }
 
     /**
@@ -111,9 +114,13 @@ class Firebase implements FirebaseInterface
      */
     public function post($endpoint, $data, $query = [])
     {
-        $this->response = $this->client->post($endpoint,$data);
+        $endpoint = $this->buildUri($endpoint, $query);
+        $headers = $this->buildHeaders();
+        $data = $this->prepareData($data);
 
-        return $this;
+        $this->response = $this->client->post($endpoint,$data,$headers);
+
+        return $this->response;
     }
 
     /**
@@ -127,9 +134,13 @@ class Firebase implements FirebaseInterface
      */
     public function put($endpoint, $data, $query = [])
     {
-        $this->response = $this->client->put($endpoint,$data);
+        $endpoint = $this->buildUri($endpoint, $query);
+        $headers = $this->buildHeaders();
+        $data = $this->prepareData($data);
 
-        return $this;
+        $this->response = $this->client->put($endpoint,$data,$headers);
+
+        return $this->response;
     }
 
     /**
@@ -143,9 +154,13 @@ class Firebase implements FirebaseInterface
      */
     public function patch($endpoint, $data, $query = [])
     {
-        $this->response = $this->client->patch($endpoint,$data);
+        $endpoint = $this->buildUri($endpoint, $query);
+        $headers = $this->buildHeaders();
+        $data = $this->prepareData($data);
 
-        return $this;
+        $this->response = $this->client->patch($endpoint,$data,$headers);
+
+        return $this->response;
     }
 
     /**
@@ -158,9 +173,12 @@ class Firebase implements FirebaseInterface
      */
     public function delete($endpoint, $query = [])
     {
-        $this->response = $this->client->delete($endpoint);
+        $endpoint = $this->buildUri($endpoint, $query);
+        $headers = $this->buildHeaders();
 
-        return $this;
+        $this->response = $this->client->delete($endpoint,$headers);
+
+        return $this->response;
     }
 
     /**
@@ -201,5 +219,52 @@ class Firebase implements FirebaseInterface
     protected function setClient(ClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Convert array|string to json
+     *
+     * @param array $data Data to be converted
+     *
+     * @return array
+     */
+    protected function prepareData($data = [])
+    {
+        return json_encode($data);
+    }
+
+    /**
+     * Create a standard uri based on the end point 
+     * and add the auth token
+     *
+     * @param string $endpoint The sub endpoint
+     * @param array $options Extra options to be added
+     *
+     * @return string
+     */
+    protected function buildUri($endpoint, $options = [])
+    {
+        if ($this->token !== '') {
+            $options['auth'] = $this->token;
+        }
+
+        return $this->base . '/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
+    }
+
+    /**
+     * Build all headers
+     *
+     * @param array $extraHeaders Extra headers to be added
+     *
+     * @return array
+     */
+    protected function buildHeaders($extraHeaders = [])
+    {
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type: application/json',
+        ];
+
+        return array_merge($headers, $extraHeaders);
     }
 }

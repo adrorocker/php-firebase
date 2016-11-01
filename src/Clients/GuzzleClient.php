@@ -34,54 +34,31 @@ class GuzzleClient implements ClientInterface
     protected $guzzle;
 
     /**
-     * Base endpoint
+     * Set the the guzzle client
      *
-     * @var string
+     * @param array $options The options to set the defaul 
+     * @param Object|null $client Client to make the requests
      */
-    protected $base;
-
-    /**
-     * Token
-     *
-     * @var string
-     */
-    protected $token;
-
-    /**
-     * Set the base path for Firebase endpont
-     * the token to authenticate and the guzzle client
-     *
-     * @param string $base The base endpoint
-     * @param string $token The token
-     * @param \PhpFirebase\Interfaces\ClientInterface|null $client Client to make the request
-     */
-    public function __construct(array $options = [])
+    public function __construct(array $options = [], $client = null)
     {
-        if (!isset($options['base'])) {
-            throw new InvalidArgumentException("Missign base path");
+        if (!$client) {
+            $client = new HttpClient($options);
         }
-
-        if (!isset($options['token'])) {
-            throw new InvalidArgumentException("Missign token");
-        }
-
-        $this->base = $options['base'];
-        $this->token = $options['token'];
         
-        $this->guzzle = new HttpClient($options);
+        $this->guzzle = $client;
     }
 
     /**
      * Create a new GET reuest
      *
      * @param string $endpoint The sub endpoint
-     * @param array $query Query parameters
+     * @param array $headers Request headers
      *
      * @return array
      */
-    public function get($endpoint, $query = [])
+    public function get($endpoint, $headers = [])
     {
-        $request = new Request('GET',$this->buildUri($endpoint, $query), $this->buildHeaders());
+        $request = new Request('GET',$endpoint, $headers);
 
         $response = $this->guzzle->send($request);
 
@@ -93,15 +70,13 @@ class GuzzleClient implements ClientInterface
      *
      * @param string $endpoint The sub endpoint
      * @param string|array $data The data to be submited
-     * @param array $query Query parameters
+     * @param array $headers Request headers
      *
      * @return array
      */
-    public function post($endpoint, $data, $query = [])
+    public function post($endpoint, $data, $headers = [])
     {
-        $data = $this->prepareData($data);
-
-        $request = new Request('POST',$this->buildUri($endpoint, $query),$this->buildHeaders(),$data);
+        $request = new Request('POST',$endpoint, $headers, $data);
 
         $response = $this->guzzle->send($request);
 
@@ -113,15 +88,13 @@ class GuzzleClient implements ClientInterface
      *
      * @param string $endpoint The sub endpoint
      * @param string|array $data The data to be submited
-     * @param array $query Query parameters
+     * @param array $headers Request headers
      *
      * @return array
      */
-    public function put($endpoint, $data, $query = [])
+    public function put($endpoint, $data, $headers = [])
     {
-        $data = $this->prepareData($data);
-
-        $request = new Request('PUT',$this->buildUri($endpoint, $query),$this->buildHeaders(),$data);
+        $request = new Request('PUT',$endpoint, $headers, $data);
 
         $response = $this->guzzle->send($request);
 
@@ -133,15 +106,13 @@ class GuzzleClient implements ClientInterface
      *
      * @param string $endpoint The sub endpoint
      * @param string|array $data The data to be submited
-     * @param array $query Query parameters
+     * @param array $headers Request headers
      *
      * @return array
      */
-    public function patch($endpoint, $data, $query = [])
+    public function patch($endpoint, $data, $headers = [])
     {
-        $data = $this->prepareData($data);
-
-        $request = new Request('PATCH',$this->buildUri($endpoint, $query),$this->buildHeaders(),$data);
+        $request = new Request('PATCH',$endpoint, $headers, $data);
 
         $response = $this->guzzle->send($request);
 
@@ -152,65 +123,20 @@ class GuzzleClient implements ClientInterface
      * Create a new DELETE reuest
      *
      * @param string $endpoint The sub endpoint
-     * @param array $query Query parameters
+    * @param array $headers Request headers
      *
      * @return array
      */
-    public function delete($endpoint, $query = [])
+    public function delete($endpoint, $headers = [])
     {
-        $request = new Request('DELETE',$this->buildUri($endpoint, $query), $this->buildHeaders());
+        $request = new Request('DELETE',$endpoint, $headers);
 
         $response = $this->guzzle->send($request);
 
         return $this->handle($response);
     }
 
-    /**
-     * Convert array|string to json
-     *
-     * @param array $data Data to be converted
-     *
-     * @return array
-     */
-    protected function prepareData($data = [])
-    {
-        return json_encode($data);
-    }
-
-    /**
-     * Create a standard uri based on the end point 
-     * and add the auth token
-     *
-     * @param string $endpoint The sub endpoint
-     * @param array $options Extra options to be added
-     *
-     * @return string
-     */
-    protected function buildUri($endpoint, $options = [])
-    {
-        if ($this->token !== '') {
-            $options['auth'] = $this->token;
-        }
-
-        return $this->base . '/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
-    }
-
-    /**
-     * Build all headers
-     *
-     * @param array $extraHeaders Extra headers to be added
-     *
-     * @return array
-     */
-    protected function buildHeaders($extraHeaders = [])
-    {
-        $headers = [
-            'Accept' => 'application/json',
-            'Content-Type: application/json',
-        ];
-
-        return array_merge($headers, $extraHeaders);
-    }
+    
 
     /**
      * Handle the response

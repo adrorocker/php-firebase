@@ -43,47 +43,47 @@ class FakeClient implements ClientInterface
         $this->guzzle = new Client(['handler' => $this->handler]);
     }
 
-    public function get($endpoint, $query = [])
+    public function get($endpoint, $headers = [])
     {
-        $response = $this->guzzle->request('GET',$endpoint);
+        $request = new Request('GET', $endpoint, $headers);
+        $response = $this->guzzle->send($request);
 
         return $this->handle($response);
     }
 
-    public function post($endpoint, $data, $query = [])
+    public function post($endpoint, $data, $headers = [])
     {
-        $response = $this->guzzle->request('POST',$endpoint);
+        $request = new Request('POST', $endpoint, $headers, $data);
+        $response = $this->guzzle->send($request);
 
         return $this->handle($response);
     }
 
-    public function put($endpoint, $data, $query = [])
+    public function put($endpoint, $data, $headers = [])
     {
-        $response = $this->guzzle->request('PUT',$endpoint);
+        $request = new Request('PUT', $endpoint, $headers, $data);
+        $response = $this->guzzle->send($request);
 
         return $this->handle($response);
     }
 
-    public function patch($endpoint, $data, $query = [])
+    public function patch($endpoint, $data, $headers = [])
     {
-        $response = $this->guzzle->request('PATCH',$endpoint);
+        $request = new Request('PATCH', $endpoint, $headers, $data);
+        $response = $this->guzzle->send($request);
 
         return $this->handle($response);
     }
 
-    public function delete($endpoint, $query = [])
+    public function delete($endpoint, $headers = [])
     {
-        $response = $this->guzzle->request('DELETE',$endpoint);
+        $request = new Request('DELETE', $endpoint, $headers);
+        $response = $this->guzzle->send($request);
 
         return $this->handle($response);
     }
 
-    protected function buildUri($endpoint, $options = [], $query = [])
-    {
-        return 'http://example.com/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
-    }
-
-    private function handle(Response $response, $default = null)
+    private function handle(Response $response)
     {
         $stream = stream_for($response->getBody());
 
