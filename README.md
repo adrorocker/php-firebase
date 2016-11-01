@@ -5,7 +5,6 @@ A PHP SDK for Firebase REST API.
 
 [![Build status][Master image]][Master]
 [![Coverage Status][Master covarage image]][Master covarage]
-
 [![Latest Stable Version][Stable version image]][Stable version]
 [![License][License image]][License]
 
