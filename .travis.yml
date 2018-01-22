@@ -10,21 +10,27 @@ sudo: required
 
 install: composer install
 
+matrix:
+    allow_failures:
+        - php: hhvm
+
 before_script:
   # navigate out of module directory to prevent blown stack by recursive module lookup
-  - wget https://phar.phpunit.de/phpunit.phar
-  - chmod +x phpunit.phar
-  - sudo mv phpunit.phar /usr/local/bin/phpunit
+  - wget https://phar.phpunit.de/phpunit-5.6.phar
+  - chmod +x phpunit-5.6.phar
+  - sudo mv phpunit-5.6.phar /usr/local/bin/phpunit
   - phpunit --version
 
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install
-  - php composer.phar require satooshi/php-coveralls
+  - php composer.phar require php-coveralls/php-coveralls
 
 script:
   - mkdir -p build/logs
   - phpunit -c phpunit.xml.dist
+  - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
-  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then travis_retry php vendor/bin/coveralls -v; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == '7.0' ]]; then travis_retry php vendor/bin/coveralls -v; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then travis_retry php vendor/bin/php-coveralls -v; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '7.0' ]]; then travis_retry php vendor/bin/php-coveralls -v; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == '7.1' ]]; then travis_retry php vendor/bin/php-coveralls -v; fi

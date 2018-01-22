@@ -1,25 +1,26 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2016 Adro Rocker
  * @author    Adro Rocker <alejandro.morelos@jarwebdev.com>
  */
+
 namespace PhpFirebase\Clients;
 
-use PhpFirebase\Interfaces\ClientInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Response;
+use PhpFirebase\Interfaces\ClientInterface;
 use function GuzzleHttp\Psr7\stream_for;
 
 class FakeClient implements ClientInterface
 {
-
     protected $mock;
 
     protected $handler;
@@ -29,13 +30,13 @@ class FakeClient implements ClientInterface
     public function __construct()
     {
         $this->mock = new MockHandler([
-                        new Response(200, [],'Hello Firebase GET'),
-                        new Response(200, [],'Hello Firebase POST'),
-                        new Response(200, [],'Hello Firebase PUT'),
-                        new Response(200, [],'Hello Firebase PATCH'),
-                        new Response(200, [],'Hello Firebase DELETE'),
+                        new Response(200, [], 'Hello Firebase GET'),
+                        new Response(200, [], 'Hello Firebase POST'),
+                        new Response(200, [], 'Hello Firebase PUT'),
+                        new Response(200, [], 'Hello Firebase PATCH'),
+                        new Response(200, [], 'Hello Firebase DELETE'),
                         new Response(202, ['Content-Length' => 0]),
-                        new RequestException("Error Communicating with Server", new Request('GET', 'test')),
+                        new RequestException('Error Communicating with Server', new Request('GET', 'test')),
                     ]);
 
         $this->handler = HandlerStack::create($this->mock);
