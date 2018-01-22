@@ -3,8 +3,8 @@
  * PHP-Firebase
  *
  * @link      https://github.com/adrorocker/php-firebase
- * @copyright Copyright (c) 2016 Adro Rocker
- * @author    Adro Rocker <alejandro.morelos@jarwebdev.com>
+ * @copyright Copyright (c) 2018 Adro Rocker
+ * @author    Adro Rocker <mes@adro.rocks>
  */
 namespace PhpFirebase;
 
@@ -51,7 +51,7 @@ class Firebase implements FirebaseInterface
 
     /**
      * Set the base path for Firebase endpont
-     * and the token to authenticate 
+     * and the token to authenticate
      *
      * @param string $base The base endpoint
      * @param string $token The token
@@ -72,7 +72,7 @@ class Firebase implements FirebaseInterface
             throw new InvalidArgumentException("The base URL $base is not valid", 1);
         }
         
-        $this->base = rtrim($base,'/');
+        $this->base = rtrim($base, '/');
         $this->token = (string) $token;
 
         if (!$client) {
@@ -98,7 +98,7 @@ class Firebase implements FirebaseInterface
         $endpoint = $this->buildUri($endpoint, $query);
         $headers = $this->buildHeaders();
 
-        $this->response = $this->client->get($endpoint,$headers);
+        $this->response = $this->client->get($endpoint, $headers);
 
         return $this->response;
     }
@@ -118,7 +118,7 @@ class Firebase implements FirebaseInterface
         $headers = $this->buildHeaders();
         $data = $this->prepareData($data);
 
-        $this->response = $this->client->post($endpoint,$data,$headers);
+        $this->response = $this->client->post($endpoint, $data, $headers);
 
         return $this->response;
     }
@@ -138,7 +138,7 @@ class Firebase implements FirebaseInterface
         $headers = $this->buildHeaders();
         $data = $this->prepareData($data);
 
-        $this->response = $this->client->put($endpoint,$data,$headers);
+        $this->response = $this->client->put($endpoint, $data, $headers);
 
         return $this->response;
     }
@@ -158,7 +158,7 @@ class Firebase implements FirebaseInterface
         $headers = $this->buildHeaders();
         $data = $this->prepareData($data);
 
-        $this->response = $this->client->patch($endpoint,$data,$headers);
+        $this->response = $this->client->patch($endpoint, $data, $headers);
 
         return $this->response;
     }
@@ -176,7 +176,7 @@ class Firebase implements FirebaseInterface
         $endpoint = $this->buildUri($endpoint, $query);
         $headers = $this->buildHeaders();
 
-        $this->response = $this->client->delete($endpoint,$headers);
+        $this->response = $this->client->delete($endpoint, $headers);
 
         return $this->response;
     }
@@ -234,7 +234,7 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * Create a standard uri based on the end point 
+     * Create a standard uri based on the end point
      * and add the auth token
      *
      * @param string $endpoint The sub endpoint

@@ -8,7 +8,7 @@
     "authors": [
         {
             "name": "Adro Rocker",
-            "email": "alejandro.morelos@jarwebdev.com",
+            "email": "me@adro.rocks",
             "homepage": "https://github.com/adrorocker"
         }
     ],
@@ -21,9 +21,10 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpFirebase\\": ["src/","tests/"]
+            "PhpFirebase\\": ["src/", "extra/", "tests/"]
         },
         "files": [
+            "extra/Entities/functions.php"
         ]
     },
     "extra": {

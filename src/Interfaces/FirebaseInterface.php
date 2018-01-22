@@ -3,8 +3,8 @@
  * PHP-Firebase
  *
  * @link      https://github.com/adrorocker/php-firebase
- * @copyright Copyright (c) 2016 Adro Rocker
- * @author    Adro Rocker <alejandro.morelos@jarwebdev.com>
+ * @copyright Copyright (c) 2018 Adro Rocker
+ * @author    Adro Rocker <mes@adro.rocks>
  */
 namespace PhpFirebase\Interfaces;
 
@@ -19,7 +19,7 @@ interface FirebaseInterface
 {
     /**
      * Set the base path for Firebase endpont
-     * and the token to authenticate 
+     * and the token to authenticate
      *
      * @param string $base The base endpoint
      * @param string $token The token

@@ -3,8 +3,8 @@
  * PHP-Firebase
  *
  * @link      https://github.com/adrorocker/php-firebase
- * @copyright Copyright (c) 2016 Adro Rocker
- * @author    Adro Rocker <alejandro.morelos@jarwebdev.com>
+ * @copyright Copyright (c) 2018 Adro Rocker
+ * @author    Adro Rocker <mes@adro.rocks>
  */
 namespace PhpFirebase\Clients;
 
@@ -36,7 +36,7 @@ class GuzzleClient implements ClientInterface
     /**
      * Set the the guzzle client
      *
-     * @param array $options The options to set the defaul 
+     * @param array $options The options to set the defaul
      * @param Object|null $client Client to make the requests
      */
     public function __construct(array $options = [], $client = null)
@@ -58,7 +58,7 @@ class GuzzleClient implements ClientInterface
      */
     public function get($endpoint, $headers = [])
     {
-        $request = new Request('GET',$endpoint, $headers);
+        $request = new Request('GET', $endpoint, $headers);
 
         $response = $this->guzzle->send($request);
 
@@ -76,7 +76,7 @@ class GuzzleClient implements ClientInterface
      */
     public function post($endpoint, $data, $headers = [])
     {
-        $request = new Request('POST',$endpoint, $headers, $data);
+        $request = new Request('POST', $endpoint, $headers, $data);
 
         $response = $this->guzzle->send($request);
 
@@ -94,7 +94,7 @@ class GuzzleClient implements ClientInterface
      */
     public function put($endpoint, $data, $headers = [])
     {
-        $request = new Request('PUT',$endpoint, $headers, $data);
+        $request = new Request('PUT', $endpoint, $headers, $data);
 
         $response = $this->guzzle->send($request);
 
@@ -112,7 +112,7 @@ class GuzzleClient implements ClientInterface
      */
     public function patch($endpoint, $data, $headers = [])
     {
-        $request = new Request('PATCH',$endpoint, $headers, $data);
+        $request = new Request('PATCH', $endpoint, $headers, $data);
 
         $response = $this->guzzle->send($request);
 
@@ -129,7 +129,7 @@ class GuzzleClient implements ClientInterface
      */
     public function delete($endpoint, $headers = [])
     {
-        $request = new Request('DELETE',$endpoint, $headers);
+        $request = new Request('DELETE', $endpoint, $headers);
 
         $response = $this->guzzle->send($request);
 
@@ -153,5 +153,4 @@ class GuzzleClient implements ClientInterface
 
         return $data;
     }
-    
 }
