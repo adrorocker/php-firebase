@@ -2,7 +2,6 @@
 
 namespace PhpFirebase\Entities\Repository;
 
-use PhpFirebase\Entities\Repository\Repository;
 use PhpFirebase\Entities\User;
 
 class NoClinetUserRepository extends Repository

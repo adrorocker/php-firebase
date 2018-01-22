@@ -1,58 +1,55 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2018 Adro Rocker
  * @author    Adro Rocker <mes@adro.rocks>
  */
+
 namespace PhpFirebase\Clients;
 
-use InvalidArgumentException;
-use PhpFirebase\Interfaces\ClientInterface;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Uri;
+use PhpFirebase\Interfaces\ClientInterface;
 use function GuzzleHttp\Psr7\stream_for;
 
 /**
  * Guzzle Client.
  *
- * @package PhpFirebase
- * @subpackage Clients
  * @since 0.1.0
  */
 class GuzzleClient implements ClientInterface
 {
     /**
-     * Guzzle client
+     * Guzzle client.
      *
      * @var \GuzzleHttp\Client
      */
     protected $guzzle;
 
     /**
-     * Set the the guzzle client
+     * Set the the guzzle client.
      *
-     * @param array $options The options to set the defaul
-     * @param Object|null $client Client to make the requests
+     * @param array       $options The options to set the defaul
+     * @param object|null $client  Client to make the requests
      */
     public function __construct(array $options = [], $client = null)
     {
         if (!$client) {
             $client = new HttpClient($options);
         }
-        
+
         $this->guzzle = $client;
     }
 
     /**
-     * Create a new GET reuest
+     * Create a new GET reuest.
      *
      * @param string $endpoint The sub endpoint
-     * @param array $headers Request headers
+     * @param array  $headers  Request headers
      *
      * @return array
      */
@@ -66,11 +63,11 @@ class GuzzleClient implements ClientInterface
     }
 
     /**
-     * Create a new POST reuest
+     * Create a new POST reuest.
      *
-     * @param string $endpoint The sub endpoint
-     * @param string|array $data The data to be submited
-     * @param array $headers Request headers
+     * @param string       $endpoint The sub endpoint
+     * @param string|array $data     The data to be submited
+     * @param array        $headers  Request headers
      *
      * @return array
      */
@@ -84,11 +81,11 @@ class GuzzleClient implements ClientInterface
     }
 
     /**
-     * Create a new PUT reuest
+     * Create a new PUT reuest.
      *
-     * @param string $endpoint The sub endpoint
-     * @param string|array $data The data to be submited
-     * @param array $headers Request headers
+     * @param string       $endpoint The sub endpoint
+     * @param string|array $data     The data to be submited
+     * @param array        $headers  Request headers
      *
      * @return array
      */
@@ -102,11 +99,11 @@ class GuzzleClient implements ClientInterface
     }
 
     /**
-     * Create a new PATCH reuest
+     * Create a new PATCH reuest.
      *
-     * @param string $endpoint The sub endpoint
-     * @param string|array $data The data to be submited
-     * @param array $headers Request headers
+     * @param string       $endpoint The sub endpoint
+     * @param string|array $data     The data to be submited
+     * @param array        $headers  Request headers
      *
      * @return array
      */
@@ -120,10 +117,10 @@ class GuzzleClient implements ClientInterface
     }
 
     /**
-     * Create a new DELETE reuest
+     * Create a new DELETE reuest.
      *
      * @param string $endpoint The sub endpoint
-    * @param array $headers Request headers
+     * @param array  $headers  Request headers
      *
      * @return array
      */
@@ -136,10 +133,8 @@ class GuzzleClient implements ClientInterface
         return $this->handle($response);
     }
 
-    
-
     /**
-     * Handle the response
+     * Handle the response.
      *
      * @param \GuzzleHttp\Psr7\Response $response The response
      *

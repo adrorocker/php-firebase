@@ -1,17 +1,19 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2018 Adro Rocker
  * @author    Adro Rocker <mes@adro.rocks>
  */
+
 namespace PhpFirebase\Entities\Repository;
 
+use PhpFirebase\Clients\GuzzleClient;
 use PhpFirebase\Entities\Entity;
 use PhpFirebase\Entities\EntityInterface;
 use PhpFirebase\Firebase;
-use PhpFirebase\Clients\GuzzleClient;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -41,7 +43,7 @@ abstract class Repository implements RepositoryInterface
             $this->firebase = new Firebase(
                 $this->base,
                 $this->token,
-                new GuzzleClient(['verify' => false,])
+                new GuzzleClient(['verify' => false])
             );
 
             $this->endpoint = $endpoint;
@@ -58,23 +60,22 @@ abstract class Repository implements RepositoryInterface
             foreach ($entity as &$record) {
                 $id = $record->id() ? $record->id() : guid();
                 $record->id($id);
-                $this->firebase->put($this->endpoint . '/'. $id, $record->toArray());
+                $this->firebase->put($this->endpoint.'/'.$id, $record->toArray());
                 $record = $this->find($id);
             }
         } elseif ($entity instanceof EntityInterface) {
             $id = $entity->id() ? $entity->id() : guid();
             $entity->id($id);
-            $response = $this->firebase->put($this->endpoint . '/'. $id, $entity->toArray());
+            $response = $this->firebase->put($this->endpoint.'/'.$id, $entity->toArray());
             $entity = $this->find($id);
         }
-
 
         return $entity;
     }
 
     public function find($id)
     {
-        $model = (array) $this->firebase->get($this->endpoint . '/'. $id);
+        $model = (array) $this->firebase->get($this->endpoint.'/'.$id);
         $class = $this->class;
         $this->model = new $class($model);
 

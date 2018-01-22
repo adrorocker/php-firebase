@@ -1,12 +1,12 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2018 Adro Rocker
  * @author    Adro Rocker <mes@adro.rocks>
  */
-
 function guid()
 {
     if (function_exists('com_create_guid') === true) {

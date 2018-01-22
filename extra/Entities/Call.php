@@ -1,11 +1,13 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2018 Adro Rocker
  * @author    Adro Rocker <mes@adro.rocks>
  */
+
 namespace PhpFirebase\Entities;
 
 use BadMethodCallException;
@@ -15,10 +17,10 @@ use ReflectionProperty;
 trait Call
 {
     /**
-     * Get or Set property
+     * Get or Set property.
      *
-     * @param string $name Name of the method
-     * @param array $arguments Arguments
+     * @param string $name      Name of the method
+     * @param array  $arguments Arguments
      *
      * @throws BadMethodCallException If the $name is not a property
      */
@@ -32,9 +34,9 @@ trait Call
         }
         if ($arguments && count($arguments) == 1) {
             $reflect = new ReflectionClass($this);
-            $props   = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+            $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
             foreach ($props as $prop) {
-                if ($prop->getName()  == $name) {
+                if ($prop->getName() == $name) {
                     $this->{$name} = $arguments[0];
                 }
             }
