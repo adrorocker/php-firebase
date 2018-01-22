@@ -1,12 +1,12 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2016 Adro Rocker
  * @author    Adro Rocker <alejandro.morelos@jarwebdev.com>
  */
-
 function includeIfExists($file)
 {
     return file_exists($file) ? include $file : false;

@@ -1,11 +1,13 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2018 Adro Rocker
  * @author    Adro Rocker <mes@adro.rocks>
  */
+
 namespace PhpFirebase\Entities;
 
 use ReflectionObject;
@@ -23,9 +25,8 @@ class Bridge
      */
     protected $properties = [];
 
-
     /**
-     * Make non-public members of the given object accessible
+     * Make non-public members of the given object accessible.
      *
      * @param object $object.- Object which members we'll make accessible
      */
@@ -33,7 +34,7 @@ class Bridge
     {
         $this->object = $object;
         $reflected = new ReflectionObject($this->object);
-        $this->properties = array();
+        $this->properties = [];
 
         $properties = $reflected->getProperties(
             ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC
@@ -51,7 +52,7 @@ class Bridge
     }
 
     /**
-     * Returns a property of $this->object
+     * Returns a property of $this->object.
      *
      * @param string $name
      *
@@ -64,7 +65,5 @@ class Bridge
         if (isset($this->properties[$name])) {
             return $this->properties[$name]->getValue($this->object);
         }
-
-        return null;
     }
 }

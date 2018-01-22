@@ -1,49 +1,50 @@
 <?php
 /**
- * PHP-Firebase
+ * PHP-Firebase.
  *
  * @link      https://github.com/adrorocker/php-firebase
+ *
  * @copyright Copyright (c) 2018 Adro Rocker
  * @author    Adro Rocker <mes@adro.rocks>
  */
+
 namespace PhpFirebase;
 
 use InvalidArgumentException;
 use PhpFirebase\Clients\GuzzleClient;
-use PhpFirebase\Interfaces\FirebaseInterface;
 use PhpFirebase\Interfaces\ClientInterface;
+use PhpFirebase\Interfaces\FirebaseInterface;
 
 /**
  * Firebase.
  *
- * @package PhpFirebase
  * @since 0.1.0
  */
 class Firebase implements FirebaseInterface
 {
     /**
-     * Base endpoint
+     * Base endpoint.
      *
      * @var string
      */
     protected $base;
 
     /**
-     * Token
+     * Token.
      *
      * @var string
      */
     protected $token;
 
     /**
-     * Client
+     * Client.
      *
      * @var \PhpFirebase\Interfaces\ClientInterface
      */
     protected $client = null;
 
     /**
-     * Response
+     * Response.
      *
      * @var mixed
      */
@@ -51,33 +52,33 @@ class Firebase implements FirebaseInterface
 
     /**
      * Set the base path for Firebase endpont
-     * and the token to authenticate
+     * and the token to authenticate.
      *
-     * @param string $base The base endpoint
-     * @param string $token The token
+     * @param string                                       $base   The base endpoint
+     * @param string                                       $token  The token
      * @param \PhpFirebase\Interfaces\ClientInterface|null $client Client to make the request
      */
     public function __construct($base, $token, ClientInterface $client = null)
     {
         if (!is_string($base)) {
-            throw new InvalidArgumentException("Base parameter needs to be string", 1);
+            throw new InvalidArgumentException('Base parameter needs to be string', 1);
         }
         if (!is_string($token)) {
-            throw new InvalidArgumentException("Token parameter needs to be string", 1);
+            throw new InvalidArgumentException('Token parameter needs to be string', 1);
         }
-        
+
         $parts = parse_url($base);
 
         if (!isset($parts['scheme']) || !isset($parts['host'])) {
             throw new InvalidArgumentException("The base URL $base is not valid", 1);
         }
-        
+
         $this->base = rtrim($base, '/');
         $this->token = (string) $token;
 
         if (!$client) {
             $client = new GuzzleClient([
-                'base' => $this->base,
+                'base'  => $this->base,
                 'token' => $this->token,
             ]);
         }
@@ -86,10 +87,10 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * GET request
+     * GET request.
      *
      * @param string $endpoint The sub endpoint
-     * @param array $query Query parameters
+     * @param array  $query    Query parameters
      *
      * @return object
      */
@@ -104,11 +105,11 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * POST request
+     * POST request.
      *
-     * @param string $endpoint The sub endpoint
-     * @param string|array $data The data to be submited
-     * @param array $query Query parameters
+     * @param string       $endpoint The sub endpoint
+     * @param string|array $data     The data to be submited
+     * @param array        $query    Query parameters
      *
      * @return object
      */
@@ -124,11 +125,11 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * PUT request
+     * PUT request.
      *
-     * @param string $endpoint The sub endpoint
-     * @param string|array $data The data to be submited
-     * @param array $query Query parameters
+     * @param string       $endpoint The sub endpoint
+     * @param string|array $data     The data to be submited
+     * @param array        $query    Query parameters
      *
      * @return object
      */
@@ -144,11 +145,11 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * PATCH request
+     * PATCH request.
      *
-     * @param string $endpoint The sub endpoint
-     * @param string|array $data The data to be submited
-     * @param array $query Query parameters
+     * @param string       $endpoint The sub endpoint
+     * @param string|array $data     The data to be submited
+     * @param array        $query    Query parameters
      *
      * @return object
      */
@@ -164,10 +165,10 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * DELETE request
+     * DELETE request.
      *
      * @param string $endpoint The sub endpoint
-     * @param array $query Query parameters
+     * @param array  $query    Query parameters
      *
      * @return object
      */
@@ -182,7 +183,7 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * Get response
+     * Get response.
      *
      * @return mixed
      */
@@ -192,7 +193,7 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return \PhpFirebase\Interfaces\ClientInterface
      */
@@ -202,7 +203,7 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * Get base endpoint
+     * Get base endpoint.
      *
      * @return string
      */
@@ -212,7 +213,7 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * Set the client
+     * Set the client.
      *
      * @param \PhpFirebase\Interfaces\ClientInterface
      */
@@ -222,7 +223,7 @@ class Firebase implements FirebaseInterface
     }
 
     /**
-     * Convert array|string to json
+     * Convert array|string to json.
      *
      * @param array $data Data to be converted
      *
@@ -235,10 +236,10 @@ class Firebase implements FirebaseInterface
 
     /**
      * Create a standard uri based on the end point
-     * and add the auth token
+     * and add the auth token.
      *
      * @param string $endpoint The sub endpoint
-     * @param array $options Extra options to be added
+     * @param array  $options  Extra options to be added
      *
      * @return string
      */
@@ -248,11 +249,11 @@ class Firebase implements FirebaseInterface
             $options['auth'] = $this->token;
         }
 
-        return $this->base . '/' . ltrim($endpoint, '/') . '.json?' . http_build_query($options, '', '&');
+        return $this->base.'/'.ltrim($endpoint, '/').'.json?'.http_build_query($options, '', '&');
     }
 
     /**
-     * Build all headers
+     * Build all headers.
      *
      * @param array $extraHeaders Extra headers to be added
      *
