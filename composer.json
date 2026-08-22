@@ -1,35 +1,68 @@
 {
     "name": "adrorocker/php-firebase",
-    "description": "A PHP SDK for Google Firebase",
+    "description": "Entities and repositories for Firebase, mapping records to typed objects. Works with the Realtime Database and Firestore.",
     "license": "MIT",
-    "keywords": ["sdk", "php", "firebase", "google", "adrorocker"],
+    "keywords": [
+        "firebase",
+        "firestore",
+        "realtime-database",
+        "repository",
+        "entity",
+        "php",
+        "odm"
+    ],
     "homepage": "https://github.com/adrorocker/php-firebase",
     "type": "library",
     "authors": [
         {
-            "name": "Adro Rocker",
+            "name": "Adro Morelos",
             "email": "me@adro.rocks",
             "homepage": "https://github.com/adrorocker"
         }
     ],
     "require": {
-        "php": ">= 5.6",
-        "guzzlehttp/guzzle": "~6.0"
+        "php": "^8.3",
+        "ext-json": "*",
+        "cuyz/valinor": "^2.2",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.6.*"
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "google/auth": "^1.53",
+        "guzzlehttp/guzzle": "^7.9",
+        "kreait/firebase-php": "^8.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.4"
     },
     "autoload": {
         "psr-4": {
-            "PhpFirebase\\": ["src/", "extra/", "tests/"]
-        },
-        "files": [
-            "extra/Entities/functions.php"
-        ]
+            "PhpFirebase\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpFirebase\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan analyse",
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix"
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.4-dev"
+            "dev-master": "1.0-dev"
         }
+    },
+    "suggest": {
+        "kreait/firebase-php": "To use the Firebase Realtime Database as the backend, via RealtimeDatabaseConnection (^8.0)",
+        "google/auth": "To use Firestore with FirestoreConnectionFactory, which builds an authenticated client for you (^1.53)",
+        "guzzlehttp/guzzle": "A PSR-18 client for Firestore; any other will do, and google/auth brings this one along (^7.9)"
     }
 }
