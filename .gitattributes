@@ -1,12 +1,14 @@
 # Enforce Unix newlines
 * text=lf
 
-# Keep development files out of the installed package
-/.github            export-ignore
+# Keep development files out of the installed package. README.md stays, because
+# Packagist and GitHub read it; everything else here is for people working on
+# the package, not people depending on it.
+/docs               export-ignore
 /tests              export-ignore
+/.github            export-ignore
 /.gitattributes     export-ignore
 /.gitignore         export-ignore
 /.php-cs-fixer.dist.php export-ignore
 /phpstan.neon.dist  export-ignore
 /phpunit.xml.dist   export-ignore
-/UPGRADING.md       export-ignore
