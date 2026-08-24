@@ -1,4 +1,6 @@
-build
-html
-vendor
-composer.lock
+/vendor/
+/composer.lock
+/.phpunit.cache/
+/.php-cs-fixer.cache
+/build/
+.phpactor.json
